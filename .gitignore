@@ -31,5 +31,4 @@ dev
 .idea
 node_modules/
 **/assets-src/build/source/
-*.sc
 

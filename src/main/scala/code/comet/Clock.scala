@@ -36,7 +36,7 @@ class Clock extends CometActor with Logger with CometListener {
   protected var username = ""
   protected var currentException:Option[Throwable] = None
 
-  override def localSetup() = {
+  override def localSetup(): Unit = {
     super.localSetup()
   }
 
@@ -66,6 +66,11 @@ class Clock extends CometActor with Logger with CometListener {
     case other =>
       println("cometActor received unknown message: %s".format(other))
   }
+
+  /**
+   *
+   * @param in
+   */
   protected def printException(in:Option[Throwable]):Unit = {
     currentException = in
     reRender()

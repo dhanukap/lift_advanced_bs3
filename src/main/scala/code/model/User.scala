@@ -1,21 +1,17 @@
 package code
 package model
 
-import net.liftweb.mapper._
-import net.liftweb.util._
-import net.liftweb.common._
-import net.liftweb.sitemap.Loc._
-import net.liftweb.http._
-import net.liftweb.http.SHtml._
 import net.liftmodules.FoBoBs.mapper._
+import net.liftweb.common._
+import net.liftweb.mapper._
+import net.liftweb.sitemap.Loc._
 
 /**
  * The singleton that has methods for accessing the database
  */
 object User extends User with MetaMegaProtoUser[User] with BootstrapMegaMetaProtoUser[User]  {
   override def dbTableName = "users" // define the DB table name
-  override def screenWrap = Full(<lift:surround with="default" at="content">
-			       <lift:bind /></lift:surround>)
+  override def screenWrap = Full(<lift:surround with="default" at="content"> <lift:bind /></lift:surround>)
   // define the order fields will appear in forms and output
   override def fieldOrder = List(id, firstName, lastName, email,
   locale, timezone, password, textArea) 
