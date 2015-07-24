@@ -1,0 +1,4 @@
+db.driver=oracle.jdbc.driver.OracleDriver
+db.url=jdbc:oracle:thin:@//orase1.cnoqvzmpkh0z.us-west-2.rds.amazonaws.com:1521/ORCL
+db.user=sa
+db.password=welcome1

@@ -36,7 +36,10 @@ libraryDependencies ++= {
     //"net.liftmodules" %% ("ng-js_"+liftVersion) % (liftNgJsVersion+"_"+ngVersion) % "compile"
     //"net.liftmodules" %% ("ng_"+liftEdition)    % "0.6.4"            % "compile",
     //"net.liftmodules" %% ("ng-js_"+liftEdition) % (liftNgJsVersion+"_"+ngVersion) % "compile"
-    "com.softwaremill.macwire" %% "macros" % "1.0.5"
+    "com.softwaremill.macwire" %% "macros" % "1.0.5",    "mysql" % "mysql-connector-java" % "5.1.32",
+    "org.postgresql" % "postgresql" % "9.3-1102-jdbc41",
+    "mssql" % "sqljdbc4" % "4.0.2206.100",
+    "com.oracle" % "ojdbc6"  % "11.2.0.4"
   )
 }
 
