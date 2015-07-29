@@ -7,14 +7,18 @@
 <body data-lift-content-id="main">
 <div id="main" data-lift="surround?with=default;at=content">
 
-    <h2>Welcome to your project!</h2>
+    <h2>Welcome Scala-Lift-EC2 project!</h2>
 
     <p>
 	<div data-lift="helloWorld.howdy">
-	  Welcome to your Lift app at <span id="time">Time goes here</span>
+	  Welcome to your Scala Lift EC2 app at <span id="time">Time goes here</span>
       <div class="button_1"></div>
 	</div>
     </p>
+
+    <div data-lift="IEOnly?cond=lt+IE+9">
+        You're using IE 8 or earlier
+    </div>
 
     <div data-lift="Comet?type=Clock">
         Current Time: <span id="time2">Missing Clock</span>
