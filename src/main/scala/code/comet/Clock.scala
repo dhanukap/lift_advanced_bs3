@@ -4,11 +4,12 @@ import java.util.Date
 
 import code.lib.DependencyFactory
 import net.liftweb.actor._
+import net.liftweb.common.{Box, Full, Logger}
+import net.liftweb.http._
 import net.liftweb.http.js.JsCmds.SetHtml
 import net.liftweb.util.Helpers._
 import net.liftweb.util.Schedule
-import net.liftweb.common.{Box, Full, Logger}
-import net.liftweb.http._
+
 import scala.language.postfixOps
 import scala.xml._
 
@@ -58,7 +59,12 @@ class Clock extends CometActor with Logger with CometListener {
       Schedule.schedule(this, Tick, 10000L)
     case TickWithRed =>
       println("Got tock ")
-      partialUpdate(SetHtml("time2", Text("Tock")))
+      partialUpdate(SetHtml("time2", Text("Tock"))
+     /* partialUpdate({
+        val a = new code.snippet.PassThruSnippet
+        SetHtml("dh5t",a.render.apply(Template("index.html").template  "*"))
+      }*/
+      )
     case Nil =>
       println("cometActor starting up")
 /*    case a:Option[Throwable] =>
