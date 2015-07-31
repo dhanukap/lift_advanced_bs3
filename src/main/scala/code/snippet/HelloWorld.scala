@@ -1,5 +1,5 @@
-package code 
-package snippet 
+package code
+package snippet
 
 import java.util.Date
 
@@ -18,9 +18,10 @@ class HelloWorld {
   // replace the contents of the element with id "time" with the date
   def howdy = {
     "#time *" #> date.map(_.toString) &
-    ".button_1 *" #> SHtml.ajaxButton(Text("Tock!"),{
-      () => ClockMaster ! TickWithRed
-      Noop})
+      ".button *" #> SHtml.ajaxButton(Text("Update agents!"), {
+        () => ClockMaster ! TickWithRed
+          Noop
+      })
   }
 
   /*
