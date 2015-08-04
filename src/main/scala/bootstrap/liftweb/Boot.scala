@@ -94,13 +94,14 @@ class Boot {
     val ddLabel1 = Menu.i("UserDDLabel") / "ddlabel1"
     val home = Menu.i("Home") / "index"
     val userMenu = User.AddUserMenusHere
-    val static = Menu(Loc("Static", Link(List("static"), true, "/static/index"), S.loc("StaticContent", scala.xml.Text("Static Content")), LocGroup("lg2", "topRight")))
+    val static = Menu(Loc("Static", Link(List("static"),  matchHead_? = true, "/static/index"), S.loc("StaticContent", scala.xml.Text("Static Content")), LocGroup("lg2", "topRight")))
     val twbs = Menu(Loc("twbs",
       ExtLink("http://getbootstrap.com/"),
       S.loc("Bootstrap3", Text("Bootstrap3")),
       LocGroup("lg2"),
       FoBo.TBLocInfo.LinkTargetBlank))
 
+    val protectedWay = If(() => false, () => ForbiddenResponse("No!"))
 
     def sitemap = SiteMap(
       home >> LocGroup("lg1"),
@@ -108,10 +109,39 @@ class Boot {
       twbs,
       ddLabel1 >> LocGroup("topRight") >> PlaceHolder submenus (
         divider1 >> FoBo.TBLocInfo.Divider >> userMenu
-        )
+        ),
+      Menu.i("404") / "404" >> Hidden, //As an alternative, you could include the 404 page in your site map using Menu.builder
+      Menu.i("secret") / "secret" >> protectedWay,
+      Menu.i("Policy") / "policy" >> Hidden
     )
   }
 
+  LiftRules.uriNotFound.prepend(NamedPF("404handler"){
+    case (req,failure) => NotFoundAsTemplate(ParsePath(List("404"), "html", absolute = true, endSlash = false))
+  })
+
+  LiftRules.responseTransformers.append {
+    case Customised(resp) => resp
+    case resp => resp
+  }
+
+
+  object Customised {
+
+    // The pages we have customised: 403.html and 500.html
+    val definedPages = 403 :: 500 :: Nil
+
+    def unapply(resp: LiftResponse) : Option[LiftResponse] = definedPages.find(_ == resp.toResponse.code).flatMap(toResponse)
+
+    def toResponse(status: Int) : Box[LiftResponse] =
+      for {
+        session <- S.session
+        req <- S.request
+        template = Templates(status.toString :: Nil)
+        response <- session.processTemplate(template, req, req.path, status)
+      } yield response
+
+  }
   /*  net.liftmodules.ng.AngularJS.init(
       // Modules to be included by default.  angular.js is assumed.
       "animate", "cookies", "loader", "resource", "route", "sanitize", "touch"
